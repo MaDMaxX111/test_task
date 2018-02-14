@@ -48,10 +48,11 @@
                     var html = '<div class="alert alert-warning alert-dismissible">';
 
                     for (var key in json['error']) {
-                        html += '<i class="fa fa-check-circle"></i> ' + json['error'][key] + ' <button type="button" class="close" data-dismiss="alert">&times;</button>';
+                        html += '<i class="fa fa-check-circle"></i> ' + json['error'][key] + ' <br/>';
                     }
 
-                    html += '</div>';
+
+                    html += '<button type="button" class="close" data-dismiss="alert">&times;</button></div>';
 
                     form.prepend(html);
                 }

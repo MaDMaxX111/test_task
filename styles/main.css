@@ -64,6 +64,17 @@ form {
     z-index: 1;
 }
 
+.alert{
+    position: relative;
+}
+
+form .alert-dismissible .close {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(-50%, -50%);
+}
+
 
 
 

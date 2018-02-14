@@ -7,6 +7,10 @@ class Program {
 
 	public function __construct() {
 
+		ini_set('error_reporting', E_ALL);
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+
 		if (!file_exists ($this->file)) {
 			file_put_contents($this->file, '<?xml version="1.0"?><messages></messages>');
 		}
@@ -14,13 +18,12 @@ class Program {
 		$this->data = file_get_contents($this->file);
 
 		if (!empty($_GET['action'])) {
-			return $this->$_GET['action']();
+			return $this->{$_GET['action']}();
 		}
-
 
 	}
 
-	public function addComment() {
+	public function addcomment() {
 
 		$json = array();
 
@@ -99,20 +102,24 @@ class Program {
 
 		$array = $multi_array = json_decode( json_encode($sXML) , 1);
 
-		foreach ($array['message'] as $message) {
-			$parent = (!empty($message['parent-comment'])) ? $message['parent-comment'] : 0;
-			$comments[$parent][$message['@attributes']['id']] = [
-				'id'        => $message['@attributes']['id'],
-				'date'      => $message['@attributes']['date'],
-				'parent'    => $parent,
-				'name'      => $message['name'],
-				'comment'   => $message['comment'],
-			];
+		if (!empty($array['message'])) {
+			foreach ($array['message'] as $message) {
+				$parent = (!empty($message['parent-comment'])) ? $message['parent-comment'] : 0;
+				$comments[$parent][$message['@attributes']['id']] = [
+					'id'      => $message['@attributes']['id'],
+					'date'    => $message['@attributes']['date'],
+					'parent'  => $parent,
+					'name'    => $message['name'],
+					'comment' => $message['comment'],
+				];
+			}
+
+			header("Content-type: text/html; charset=utf-8");
+
+			echo $this->renderComments($comments);
+		} else {
+			return false;
 		}
-
-		header("Content-type: text/html; charset=utf-8");
-
-		echo $this->renderComments($comments);
 
 	}
 
@@ -165,7 +172,7 @@ class Program {
 				$html .= '<a href="javascript:void(0);"class="reply">Ответить</a>';
 			}
 
-			if (is_array($comments[$comment['id']])) {
+			if (!empty($comments[$comment['id']]) && is_array($comments[$comment['id']])) {
 				$html .= $this->renderComments($comments, $comment['id'], ($level+1));
 			}
 
