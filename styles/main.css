@@ -1,0 +1,71 @@
+#comments {
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+.comments {
+    padding: 10px;
+    margin: 10px;
+}
+
+.comments span {
+    display: block;
+    width: fit-content;
+}
+
+.name {
+    font-style: italic;
+}
+.name:before {
+    content: 'Пишет: ';
+    font-style: normal;
+    font-weight: bold;
+}
+
+.time {
+    font-weight: bold;
+}
+
+.comment {
+    cursor: pointer;
+}
+
+form {
+    margin-top: 20px;
+}
+
+[type="submit"] {
+    position: relative;
+}
+
+[value="editcomment"] ~ .buttons [type="submit"]:after{
+    display: block;
+    content: 'Редактировать';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left:0;
+    padding: 6px 12px;
+    background: green;
+    z-index: 1;
+}
+
+[value="replycomment"] ~ .buttons [type="submit"]:after{
+    display: block;
+    content: 'Ответить';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left:0;
+    padding: 6px 12px;
+    background: green;
+    z-index: 1;
+}
+
+
+
+
+
+
